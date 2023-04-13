@@ -24,12 +24,10 @@ WORKDIR /app
 
 COPY --from=builder /build/Auto-GPT/scripts/ /build/Auto-GPT/requirements.txt /app
 
-RUN adduser --disabled-password --uid 1000 --home /app --gecos "" auto-gpt && \
+RUN
     pip install --no-cache-dir -r requirements.txt && \
-    mkdir /logs && \
-    chown -R 1000:1000 /app /logs
+    mkdir /logs
 
-USER 1000
 
 ENV OPENAI_API_KEY=${OPENAI_API_KEY} \
     ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY} \
