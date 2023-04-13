@@ -12,7 +12,7 @@ ADD https://github.com/sorenisanerd/gotty/releases/download/${GOTTY_VERSION}/got
 RUN tar -xzvf "gotty-$(uname -m).tar.gz"
 RUN apt-get update
 RUN apt-get install git -y
-RUN git clone --depth 1 https://github.com/Torantulino/Auto-GPT.git
+#RUN git clone --depth 1 https://github.com/Torantulino/Auto-GPT.git
 
 ##############################
 
@@ -22,7 +22,7 @@ COPY --chmod=+x --from=builder /build/gotty /bin/gotty
 
 WORKDIR /app
 
-COPY --from=builder /build/Auto-GPT/ /app
+COPY --from=builder /build/Auto-GPT/ /app/
 
 RUN pip install --no-cache-dir -r requirements.txt && \
     mkdir /logs
