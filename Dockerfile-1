@@ -22,7 +22,7 @@ COPY --chmod=+x --from=builder /build/gotty /bin/gotty
 
 WORKDIR /app
 
-COPY --from=builder /build/Auto-GPT/scripts/ /build/Auto-GPT/requirements.txt /app
+COPY --from=builder /build/Auto-GPT/ /app
 
 RUN
     pip install --no-cache-dir -r requirements.txt && \
