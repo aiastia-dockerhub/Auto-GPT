@@ -26,22 +26,8 @@ ADD . $WORKDIR
 
 #COPY --from=builder /build/Auto-GPT/ /app/
 
-RUN pip install --no-cache-dir -r requirements.txt && \
-    mkdir /logs
+RUN pip install --no-cache-dir -r requirements.txt 
 
-
-ENV OPENAI_API_KEY=${OPENAI_API_KEY} \
-    ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY} \
-    SMART_LLM_MODEL=${SMART_LLM_MODEL:-gpt-4} \
-    FAST_LLM_MODEL=${FAST_LLM_MODEL:-gpt-3.5-turbo} \
-    GOOGLE_API_KEY=${GOOGLE_API_KEY} \
-    CUSTOM_SEARCH_ENGINE_ID=${CUSTOM_SEARCH_ENGINE_ID} \
-    PINECONE_API_KEY=${PINECONE_API_KEY} \
-    PINECONE_ENV=${PINECONE_ENV} \
-    USE_AZURE=${USE_AZURE:-False} \
-    OPENAI_API_BASE=${OPENAI_API_BASE} \
-    OPENAI_API_VERSION=${OPENAI_API_VERSION} \
-    OPENAI_DEPLOYMENT_ID=${OPENAI_DEPLOYMENT_ID}
 
 EXPOSE 8080
 
