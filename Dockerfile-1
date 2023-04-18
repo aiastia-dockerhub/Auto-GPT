@@ -22,7 +22,8 @@ COPY --chmod=+x --from=builder /build/gotty /bin/gotty
 
 WORKDIR /app
 
-ADD . $WORKDIR
+#ADD . $WORKDIR
+COPY requirements.txt .
 
 #COPY --from=builder /build/Auto-GPT/ /app/
 
@@ -47,6 +48,8 @@ ENV PIP_NO_CACHE_DIR=yes \
     
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt 
+    
+COPY autogpt/ ./autogpt
 
 
 EXPOSE 8080
