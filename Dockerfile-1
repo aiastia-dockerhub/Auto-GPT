@@ -26,10 +26,29 @@ ADD . $WORKDIR
 
 #COPY --from=builder /build/Auto-GPT/ /app/
 
+# Install git
+RUN apt-get -y update
+RUN apt-get -y install git chromium-driver
+
+# Install Xvfb and other dependencies for headless browser testing
+RUN apt-get update \
+    && apt-get install -y wget gnupg2 libgtk-3-0 libdbus-glib-1-2 dbus-x11 xvfb ca-certificates
+
+# Install Firefox / Chromium
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y chromium firefox-esr
+
+# Set environment variables
+ENV PIP_NO_CACHE_DIR=yes \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+    
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt 
 
 
 EXPOSE 8080
 
-CMD ["gotty", "--port", "8080", "--permit-write", "--title-format", "AutoGPT Terminal", "bash", "-c", "python main.py  --gpt3only"]
+CMD ["gotty", "--port", "8080", "--permit-write", "--title-format", "AutoGPT Terminal", "bash", "-c", "python -m autogpt --gpt3only"]
