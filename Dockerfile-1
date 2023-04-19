@@ -16,7 +16,7 @@ RUN apt-get update
 
 ##############################
 
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 COPY --chmod=+x --from=builder /build/gotty /bin/gotty
 
